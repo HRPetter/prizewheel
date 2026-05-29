@@ -31,6 +31,7 @@
       z-index: 100;
     }
 
+    /* ✅ GOLD UPDATED (from your preferred version) */
     .title {
       font-family: "Montserrat", sans-serif;
       font-weight: 800;
@@ -132,7 +133,6 @@
     .spin-button:hover { background:#003f6b; transform: scale(1.05); }
     .spin-button:active { transform: scale(0.98); }
 
-    /* ✅ UPDATED: centre everything in the panel */
     .info-panel {
       position: absolute;
       right: 40px;
@@ -176,28 +176,20 @@
 <body>
 
   <img src="20_years.png" class="corner-logo" />
-
   <h1 class="title">RCPsych eLearning Hub Mystery Prize</h1>
 
   <div class="game-wrapper">
 
     <div class="wheel-section">
-
       <div class="wheel-container">
-
         <div class="pointer"></div>
-
         <canvas id="wheel" width="500" height="500"></canvas>
-
         <button class="spin-button" id="spinBtn">SPIN</button>
-
       </div>
-
     </div>
 
     <div class="info-panel">
       <div id="result">Spin the wheel!</div>
-      <div id="prize"></div>
     </div>
 
   </div>
@@ -233,13 +225,23 @@ function drawWheel(rotation = 0) {
     ctx.strokeStyle = "#000";
     ctx.stroke();
 
+    const midAngle = startAngle + anglePerSegment / 2;
+
+    const textX = (wheelRadius - 40) * Math.cos(midAngle);
+    const textY = (wheelRadius - 40) * Math.sin(midAngle);
+
     ctx.save();
-    ctx.translate(centerX, centerY);
-    ctx.rotate(startAngle + anglePerSegment / 2);
+    ctx.translate(centerX + textX, centerY + textY);
+
+    ctx.rotate(midAngle + Math.PI / 2);
+
     ctx.fillStyle = i % 2 ? "black" : "white";
     ctx.font = "bold 24px Arial";
-    ctx.textAlign = "right";
-    ctx.fillText(i + 1, wheelRadius - 20, 10);
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    ctx.fillText(i + 1, 0, 0);
+
     ctx.restore();
   }
 
@@ -284,7 +286,7 @@ function spinWheel() {
       document.getElementById("result").innerHTML =
         "<strong>Prize " + prizeNumber + "</strong><br>" +
         "<span class='subtext'>Hoarding Podcast</span>" +
-        "<img src='1_hoarding.png' alt='Hoarding QR Code' class='qr'>";
+        "<img src='1_hoarding.png' class='qr'>";
     }
   }
 
