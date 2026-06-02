@@ -97,9 +97,16 @@
       font-weight: 800;
       cursor: pointer;
       z-index: 20;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      line-height: 1;
+      text-align: center;
     }
 
-    /* 🎯 WIN OVERLAY (CENTER OF WHEEL) */
+    /* WIN OVERLAY (CENTER OF WHEEL) */
     .win-overlay {
       position: absolute;
       inset: 0;
@@ -166,7 +173,7 @@
 
       <button class="spin-button" id="spinBtn">SPIN</button>
 
-      <!-- ✅ WIN OVERLAY INSIDE WHEEL -->
+
       <div id="winOverlay" class="win-overlay hidden">
         <div class="win-box">
           <div id="winTitle" class="win-title"></div>
