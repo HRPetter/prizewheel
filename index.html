@@ -37,31 +37,13 @@
       cursor: pointer;
     }
 
-    .title {
-      font-family: "Montserrat", sans-serif;
-      font-weight: 800;
-      text-align: center;
-      font-size: 32px;
-      margin-top: 1px;
-      margin-bottom: 20px;
-
-      background: linear-gradient(
-        135deg,
-        #e6bd2f 0%,
-        #fff066 14%,
-        #d9aa1f 30%,
-        #fff36a 48%,
-        #e8c22f 64%,
-        #ffe85c 80%,
-        #c39212 100%
-      );
-
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      color: transparent;
-
-      text-shadow: 0 1px 0 rgba(0,0,0,0.3),
-                   0 2px 5px rgba(0,0,0,0.35);
+    .title-image {
+      display: block;
+      max-width: 700px;
+      width: 90%;
+      height: auto;
+      margin-top: -40px;
+      margin-bottom: 10px;
     }
 
     .game-wrapper {
@@ -69,6 +51,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      gap: 30px;
       width: 100%;
       max-width: 1200px;
     }
@@ -92,8 +75,7 @@
     .wheel-container::before {
       content: "";
       position: absolute;
-      width: 510px;
-      height: 510px;
+      inset: -6px;
       border-radius: 50%;
       border: 4px solid rgba(255,255,255,0.9);
       box-shadow:
@@ -140,15 +122,11 @@
     .spin-button:active { transform: scale(0.98); }
 
     .info-panel {
-      position: absolute;
-      right: 40px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 200px;
+      width: 180px;
       color: white;
       background: rgba(255,255,255,0.15);
       backdrop-filter: blur(4px);
-      padding: 20px;
+      padding: 15px;
       border-radius: 18px;
       display: flex;
       flex-direction: column;
@@ -157,16 +135,16 @@
     }
 
     #result {
-      font-size: 22px;
+      font-size: 18px;
       font-weight: bold;
       margin-bottom: 10px;
       text-align: center;
     }
 
     .qr {
-      width: 140px;
+      width: 90px;
       height: auto;
-      margin-top: 10px;
+      margin-top: 8px;
       display: block;
     }
 
@@ -179,13 +157,39 @@
       pointer-events: none;
       z-index: 999;
     }
+
+    @media (max-width: 1366px) and (orientation: landscape) {
+      .game-wrapper {
+        gap: 20px;
+      }
+
+      .wheel-container {
+        width: 450px;
+        height: 450px;
+      }
+
+      canvas#wheel {
+        width: 450px;
+        height: 450px;
+      }
+
+      .info-panel {
+        width: 160px;
+        padding: 12px;
+      }
+
+      .title-image {
+        max-width: 600px;
+        margin-top: -50px;
+      }
+    }
   </style>
 </head>
 
 <body>
 
   <img src="20_years.png" class="corner-logo" onclick="resetWheel()" />
-  <h1 class="title">RCPsych eLearning Hub Mystery Prize</h1>
+  <img src="elearning_title.png" class="title-image" alt="RCPsych eLearning Hub Mystery Prize">
 
   <div class="game-wrapper">
 
@@ -219,7 +223,6 @@ let confetti = [];
 let currentRotation = 0;
 let spinning = false;
 
-/* RESET */
 function resetWheel() {
   spinning = false;
   currentRotation = 0;
@@ -229,9 +232,8 @@ function resetWheel() {
   document.getElementById("result").innerHTML = "Spin the wheel!";
 }
 
-/* CONFETTI */
 function burstConfetti() {
-  const rect = canvas.getBoundingClientRect();
+  const rect = document.querySelector(".wheel-container").getBoundingClientRect();
   const cx = rect.left + rect.width / 2;
   const cy = rect.top + rect.height / 2;
 
@@ -280,7 +282,6 @@ function animateConfetti() {
   }
 }
 
-/* PRIZES */
 const prizeData = {
   1: { title: "Hoarding podcast", img: "1_hoarding.png" },
   2: { title: "Catatonia podcast", img: "2_catatonia.png" },
@@ -294,7 +295,6 @@ const prizeData = {
   10:{ title: "Evidence-based mental health module", img: "10_ebmh.png" }
 };
 
-/* WHEEL */
 const segments = 10;
 const colors = ["#00528c", "#ffffff"];
 const wheelRadius = 240;
@@ -352,7 +352,6 @@ function getWinningSegment() {
   return Math.floor(pointerAngle / anglePerSegment) + 1;
 }
 
-/* SPIN */
 function spinWheel() {
   if (spinning) return;
   spinning = true;
@@ -380,8 +379,8 @@ function spinWheel() {
 
       document.getElementById("result").innerHTML =
         "<div style='text-align:center'>" +
-          "<div style='font-size:26px;font-weight:800;margin-bottom:8px;'>Prize " + prizeNumber + "</div>" +
-          "<div style='font-size:18px;margin-bottom:12px;'>" + prize.title + "</div>" +
+          "<div style='font-size:20px;font-weight:800;margin-bottom:6px;'>Prize " + prizeNumber + "</div>" +
+          "<div style='font-size:14px;margin-bottom:8px;'>" + prize.title + "</div>" +
           "<img src='" + prize.img + "' class='qr' style='margin:0 auto;display:block;'>" +
         "</div>";
     }
