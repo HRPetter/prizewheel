@@ -43,7 +43,7 @@
       z-index: 50;
     }
 
-    /* MOBILE TITLE (hidden by default) */
+    /* MOBILE TITLE */
     .mobile-title {
       display: none;
       position: fixed;
@@ -51,7 +51,9 @@
       left: 50%;
       transform: translateX(calc(-50% - 40px));
       width: 260px;
-      z-index: 60;
+      z-index: 99999;
+      cursor: pointer;
+      pointer-events: auto;
     }
 
     .game-wrapper {
@@ -70,6 +72,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 1;
     }
 
     .wheel-container::before {
@@ -80,9 +83,12 @@
       border: 4px solid rgba(255,255,255,0.9);
       box-shadow: 0 10px 20px rgba(0,0,0,0.35);
       z-index: 5;
+      pointer-events: none;
     }
 
-    canvas { z-index: 10; }
+    canvas { 
+      z-index: 10;
+    }
 
     .pointer {
       position: absolute;
@@ -93,6 +99,7 @@
       border-right: 16px solid transparent;
       border-top: 35px solid red;
       z-index: 80;
+      pointer-events: none;
     }
 
     .spin-button {
@@ -215,8 +222,8 @@
   <!-- DESKTOP TITLE -->
   <img src="elearning_title.png" class="title-image">
 
-  <!-- MOBILE TITLE ONLY -->
-  <img src="20_years_title.png" class="mobile-title">
+  <!-- MOBILE TITLE -->
+  <img src="20_years_title.png" class="mobile-title" onclick="resetWheel()" />
 
   <div class="game-wrapper">
 
@@ -246,6 +253,7 @@
   <canvas id="confetti"></canvas>
 
 <script>
+
 const canvas = document.getElementById("wheel");
 const ctx = canvas.getContext("2d");
 
