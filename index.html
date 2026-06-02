@@ -351,7 +351,7 @@ function spinWheel() {
       const prize = prizeData[prizeNumber];
 
       winTitle.textContent = `Prize ${prizeNumber}`;
-      winText.textContent = prize.title;
+      winText.innerHTML = prize.title;
       winImg.src = prize.img;
 
       overlay.classList.remove("hidden");
