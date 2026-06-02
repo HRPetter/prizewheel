@@ -43,13 +43,23 @@
       z-index: 50;
     }
 
+    /* MOBILE TITLE (hidden by default) */
+    .mobile-title {
+      display: none;
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(calc(-50% - 60px));
+      width: 260px;
+      z-index: 60;
+    }
+
     .game-wrapper {
       position: relative;
       width: 100%;
       height: 100vh;
     }
 
-    /* WHEEL */
     .wheel-container {
       position: absolute;
       left: 50%;
@@ -102,7 +112,6 @@
       justify-content: center;
     }
 
-    /* OVERLAY */
     .win-overlay {
       position: absolute;
       inset: 0;
@@ -155,10 +164,6 @@
       font-weight: bold;
     }
 
-    .prize-link:hover {
-      background: #003f6b;
-    }
-
     #confetti {
       position: fixed;
       inset: 0;
@@ -166,19 +171,16 @@
       z-index: 999;
     }
 
-    /* MOBILE */
+    /* ================= MOBILE ================= */
     @media (max-width: 600px) {
-      .corner-logo {
-        width: 85px;
-        top: 10px;
-        left: 10px;
+
+      .corner-logo,
+      .title-image {
+        display: none;
       }
 
-      .title-image {
-        top: 130px;
-        left: 20px;
-        transform: none;
-        max-width: 340px;
+      .mobile-title {
+        display: block;
       }
 
       .wheel-container {
@@ -207,8 +209,14 @@
 
 <body>
 
+  <!-- DESKTOP LOGO -->
   <img src="20_years.png" class="corner-logo" onclick="resetWheel()" />
+
+  <!-- DESKTOP TITLE -->
   <img src="elearning_title.png" class="title-image">
+
+  <!-- MOBILE TITLE ONLY -->
+  <img src="20_years_title.png" class="mobile-title">
 
   <div class="game-wrapper">
 
@@ -229,7 +237,6 @@
           <a id="prizeLink" class="prize-link" target="_blank">
             View Prize
           </a>
-
         </div>
       </div>
 
@@ -258,7 +265,6 @@ const winText = document.getElementById("winText");
 const winImg = document.getElementById("winImg");
 const prizeLink = document.getElementById("prizeLink");
 
-/* RESET */
 function resetWheel() {
   spinning = false;
   currentRotation = 0;
@@ -271,7 +277,6 @@ function resetWheel() {
   winImg.style.display = "block";
 }
 
-/* CONFETTI */
 function burstConfetti() {
   const rect = document.querySelector(".wheel-container").getBoundingClientRect();
   const cx = rect.left + rect.width / 2;
@@ -314,21 +319,19 @@ function animateConfetti() {
   if(confetti.length) requestAnimationFrame(animateConfetti);
 }
 
-/* PRIZES */
 const prizeData = {
   1:{title:"Hoarding podcast",img:"1_hoarding.png",link:"https://elearninghub.rcpsych.ac.uk/products/Hoarding"},
   2:{title:"Catatonia podcast",img:"2_catatonia.png",link:"https://elearninghub.rcpsych.ac.uk/products/Catatonia"},
   3:{title:"Chemsex: sexualised drug use module",img:"3_chemsex.png",link:"https://elearninghub.rcpsych.ac.uk/products/Chemsex_sexualised_drug_use"},
   4:{title:"The art of deprescribing podcast",img:"4_deprescribing.png",link:"https://elearninghub.rcpsych.ac.uk/products/The_art_of_deprescribing_Congress_2024"},
   5:{title:"Adult ADHD module",img:"5_adultadhdmod.png",link:"https://elearninghub.rcpsych.ac.uk/products/Adult_ADHD"},
-  6:{title:"Safe process for in-patient<br>discharge module",img:"6_safe_process.png",link:"https://elearninghub.rcpsych.ac.uk/products/Safe_process_for_inpatient_discharge"},
-  7:{title:"Rapid tranquillisation of the<br>acutely disturbed patient module",img:"7_rapid.png",link:"https://elearninghub.rcpsych.ac.uk/products/Rapid_tranquillisation_of_the_acutely_disturbed_patient"},
+  6:{title:"Safe process for in-patient discharge module",img:"6_safe_process.png",link:"https://elearninghub.rcpsych.ac.uk/products/Safe_process_for_inpatient_discharge"},
+  7:{title:"Rapid tranquillisation of the acutely disturbed patient module",img:"7_rapid.png",link:"https://elearninghub.rcpsych.ac.uk/products/Rapid_tranquillisation_of_the_acutely_disturbed_patient"},
   8:{title:"Perinatal anxiety module",img:"8_perinatal.png",link:"https://elearninghub.rcpsych.ac.uk/products/Anxiety_disorders_perinatal_period"},
   9:{title:"Gambling harms podcast",img:"9_gambling.png",link:"https://elearninghub.rcpsych.ac.uk/products/Gambling_disorder"},
   10:{title:"Evidence-based mental health module",img:"10_ebmh.png",link:"https://elearninghub.rcpsych.ac.uk/products/Evidence-based_mental_health"}
 };
 
-/* WHEEL */
 const segments = 10;
 const wheelRadius = 260;
 const centerX = canvas.width / 2;
@@ -378,7 +381,6 @@ function getWinner() {
   return Math.floor(((270 - deg + 360) % 360) / (360 / segments)) + 1;
 }
 
-/* SPIN */
 function spinWheel() {
   if (spinning) return;
   spinning = true;
