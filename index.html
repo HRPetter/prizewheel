@@ -103,12 +103,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-
       line-height: 1;
       text-align: center;
     }
 
-    /* WIN OVERLAY (CENTER OF WHEEL) */
+    /* WIN OVERLAY */
     .win-overlay {
       position: absolute;
       inset: 0;
@@ -120,9 +119,7 @@
       border-radius: 50%;
     }
 
-    .hidden {
-      display: none;
-    }
+    .hidden { display: none; }
 
     .win-box {
       text-align: center;
@@ -158,6 +155,52 @@
       pointer-events: none;
       z-index: 999;
     }
+
+    /* =========================
+     IPHONE / MOBILE FIX
+       ========================= */
+    @media (max-width: 600px) {
+
+      .wheel-container {
+        width: 340px;
+        height: 340px;
+        transform: translate(-50%, calc(-50% + 10px));
+      }
+
+      canvas#wheel {
+        width: 340px !important;
+        height: 340px !important;
+      }
+
+      .spin-button {
+        width: 85px;
+        height: 85px;
+        font-size: 18px;
+      }
+
+      .title-image {
+        max-width: 95%;
+        top: 15px;
+      }
+
+      .win-box {
+        padding: 14px;
+        max-width: 95%;
+      }
+
+      .win-title {
+        font-size: 22px;
+      }
+
+      .win-text {
+        font-size: 14px;
+      }
+
+      .win-img {
+        width: 120px;
+      }
+    }
+
   </style>
 </head>
 
@@ -174,7 +217,6 @@
       <canvas id="wheel" width="520" height="520"></canvas>
 
       <button class="spin-button" id="spinBtn">SPIN</button>
-
 
       <div id="winOverlay" class="win-overlay hidden">
         <div class="win-box">
@@ -203,13 +245,11 @@ let confetti = [];
 let currentRotation = 0;
 let spinning = false;
 
-/* OVERLAY */
 const overlay = document.getElementById("winOverlay");
 const winTitle = document.getElementById("winTitle");
 const winText = document.getElementById("winText");
 const winImg = document.getElementById("winImg");
 
-/* RESET */
 function resetWheel() {
   spinning = false;
   currentRotation = 0;
@@ -276,7 +316,6 @@ const prizeData = {
   10:{title:"Evidence-based mental health module",img:"10_ebmh.png"}
 };
 
-/* WHEEL */
 const segments = 10;
 const wheelRadius = 260;
 const centerX = canvas.width / 2;
@@ -326,7 +365,6 @@ function getWinner() {
   return Math.floor(((270 - deg + 360) % 360) / (360 / segments)) + 1;
 }
 
-/* SPIN */
 function spinWheel() {
   if (spinning) return;
   spinning = true;
